@@ -19,6 +19,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -35,6 +36,7 @@ import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Switch
@@ -47,6 +49,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
@@ -99,6 +102,7 @@ fun TipTimeLayout() {
         )
         EditNumberField(
             label = R.string.bill_amount,
+            leadingIcon = R.drawable.money,
             value = amountInput,
             onValueChanged = { amountInput = it },
             modifier = Modifier
@@ -111,6 +115,7 @@ fun TipTimeLayout() {
         )
         EditNumberField(
             label = R.string.how_was_the_service,
+            leadingIcon = R.drawable.percent,
             value = tipInput,
             onValueChanged = { tipInput = it },
             modifier = Modifier
@@ -137,6 +142,7 @@ fun TipTimeLayout() {
 @Composable
 fun EditNumberField(
     @StringRes label: Int,
+    @DrawableRes leadingIcon: Int,
     keyboardOptions: KeyboardOptions,
     value: String,
     onValueChanged: (String) -> Unit,
@@ -148,6 +154,7 @@ fun EditNumberField(
         modifier = modifier,
         onValueChange = onValueChanged,
         label = { Text(stringResource(label)) },
+        leadingIcon = { Icon(painter = painterResource(id = leadingIcon), null) },
         keyboardOptions = keyboardOptions
     )
 }
@@ -164,7 +171,7 @@ fun RoundTheTipRow(
             .size(48.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        Text(text = stringResource(id = R.string.round_up_tip))
+        Text(text = stringResource(id = R.string.round_up_tip), modifier = modifier)
 
         Switch(
             checked = roundUp,
